@@ -1,39 +1,39 @@
-name: Docker
+# name: Docker
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+# on:
+#   push:
+#     branches: [ master ]
+#   pull_request:
+#     branches: [ master ]
 
-jobs:
+# jobs:
 
-    deploy:
-        name: Setup Gcloud Account
-        runs-on: ubuntu-latest
-        env:
-          IMAGE_NAME: gcr.io/${{ secrets.project_id }}/forth-app
-        steps:
+#     deploy:
+#         name: Setup Gcloud Account
+#         runs-on: ubuntu-latest
+#         env:
+#           IMAGE_NAME: gcr.io/${{ secrets.project_id }}/forth-app
+#         steps:
 
-        - name: Login
-          uses: google-github-actions/setup-gcloud@v0
-          with:
-            credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+#         - name: Login
+#           uses: google-github-actions/setup-gcloud@v0
+#           with:
+#             credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
-        - name: Configure Docker
-          run: gcloud auth configure-docker --quiet
+#         - name: Configure Docker
+#           run: gcloud auth configure-docker --quiet
 
-        - name: Checkout repository
-          uses: actions/checkout@v2
+#         - name: Checkout repository
+#           uses: actions/checkout@v2
 
-        - name: Build Docker image
-          run: docker build . -t $IMAGE_NAME
+#         - name: Build Docker image
+#           run: docker build . -t $IMAGE_NAME
 
-        - name: Test Docker image
-          run: docker run $IMAGE_NAME sh -c "go test -v"
+#         - name: Test Docker image
+#           run: docker run $IMAGE_NAME sh -c "go test -v"
 
-        - name: Push Docker image
-          run: docker push $IMAGE_NAME
+#         - name: Push Docker image
+#           run: docker push $IMAGE_NAME
 
-        - name: Deploy Docker image
-          run: gcloud run deploy ${{ secrets.project_id }} --image $IMAGE_NAME --region us-central1 --platform managed
+#         - name: Deploy Docker image
+#           run: gcloud run deploy ${{ secrets.project_id }} --image $IMAGE_NAME --region us-central1 --platform managed
