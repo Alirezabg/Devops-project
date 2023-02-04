@@ -1,4 +1,4 @@
-name: 'Terraform CI'
+name: 'Terraform CI Plan'
 description: 'Runs Terraform commands via GitHub Actions.'
 on: 
   pull_request:
