@@ -4,7 +4,14 @@ terraform {
     google = {
     source = "hashicorp/google" }
   }
+  # gcloud auth application-default login
+  # https://developer.hashicorp.com/terraform/language/settings/backends/gcs
+  backend "gcs" {
+    bucket = "alirezaxbg-terraform-bucket-tfstate"
+    prefix = "terraform/state"
+  }
 }
+
 
 provider "google" {
   project     = var.project_id

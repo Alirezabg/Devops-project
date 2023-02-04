@@ -36,7 +36,7 @@ variable "zone" {
 
 variable "basename" {
   type = string
-  default = "forth"
+  default = "seventh"
 }
 
 locals {
@@ -74,6 +74,6 @@ variable "build_roles_list" {
     "roles/iam.serviceAccountUser",
     "roles/run.admin",
     "roles/secretmanager.secretAccessor",
-    "roles/artifactregistry.admin",
+    "roles/artifactregistry.admin"
   ]
 }
