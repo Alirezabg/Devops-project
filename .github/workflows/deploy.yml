@@ -13,6 +13,9 @@ jobs:
     defaults:
       run:
         working-directory: terraform
+      permissions:
+        contents: 'read'
+        id-token: 'write'
 
     steps:
       - id: 'auth'
@@ -25,6 +28,7 @@ jobs:
 
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
+
       - name: checkout
         uses: actions/checkout@v3
 
