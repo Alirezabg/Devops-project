@@ -36,7 +36,7 @@ variable "zone" {
 
 variable "basename" {
   type = string
-  default = "fifth"
+  default = "sixth"
 }
 
 locals {
