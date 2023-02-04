@@ -75,5 +75,6 @@ variable "build_roles_list" {
     "roles/run.admin",
     "roles/secretmanager.secretAccessor",
     "roles/artifactregistry.admin",
+    "roles/storage.legacyBucketWriter"
   ]
 }

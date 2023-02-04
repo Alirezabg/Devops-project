@@ -4,6 +4,17 @@ terraform {
     google = {
     source = "hashicorp/google" }
   }
+  backend "gcs" {
+    bucket = "alirezaxbg-terraform-bucket-tfstate"
+    prefix = "terraform/state"
+  }
+}
+data "terraform_remote_state" "foo" {
+  backend = "gcs"
+  config = {
+    bucket  = "terraform-state"
+    prefix  = "prod"
+  }
 }
 
 provider "google" {
