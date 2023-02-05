@@ -43,4 +43,7 @@ jobs:
 
         - name: Push Docker image
           run: docker push $IMAGE_NAME
+     
+        - name: Deploying to Cloud Run
+          use: gcloud run deploy seventh-api	 --image $IMAGE_NAME
 
