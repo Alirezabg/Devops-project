@@ -8,8 +8,7 @@ on:
 
 jobs:
 
-  deploy:
-    needs: 'deploy'
+  fedeploy:
       name: Setup Gcloud Account
       runs-on: ubuntu-latest
       defaults:
