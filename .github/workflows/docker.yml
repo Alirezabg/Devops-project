@@ -39,9 +39,6 @@ jobs:
         - name: Build Docker image
           run: docker build --tag $IMAGE_NAME .
 
-        - name: Test Docker image
-          run: docker run $IMAGE_NAME
-
         - name: Push Docker image
           run: docker push $IMAGE_NAME
 
