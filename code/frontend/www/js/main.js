@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-var basepath = "///api/v1/todo";
+var basepath = "/api/v1/todo";
 
 document.addEventListener('DOMContentLoaded', function(){
     listTodos();
