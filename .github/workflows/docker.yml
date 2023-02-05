@@ -17,17 +17,24 @@ jobs:
         env:
           IMAGE_NAME: ${{secrets.region}}-docker.pkg.dev/${{ secrets.project_id }}/${{ secrets.basename}}/fe
         steps:
-
-        - name: Login
-          uses: google-github-actions/setup-gcloud@v0
-          with:
-            credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
-
-        - name: Configure Docker
-          run: gcloud auth configure-docker --quiet
-
-        - name: Checkout repository
+         - name: Checkout repository
           uses: actions/checkout@v2
+
+         - id: 'auth'
+         uses: 'google-github-actions/auth@v1'
+         with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+         - name: 'Set up Cloud SDK'
+          uses: 'google-github-actions/setup-gcloud@v1'
+          with:
+           version: '>= 363.0.0'
+
+         - name: 'Use gcloud CLI'
+           run: 'gcloud info'
+         - name: Configure Docker
+           run: gcloud auth configure-docker --quiet
+
+
 
         - name: Build Docker image
           run: docker build . -t $IMAGE_NAME
