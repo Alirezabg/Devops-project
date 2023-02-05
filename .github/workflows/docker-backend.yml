@@ -1,11 +1,20 @@
+name: Docker
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
   deploy:
       name: Setup Gcloud Account
       runs-on: ubuntu-latest
       defaults:
         run:
-          working-directory: code/middleware/
+          working-directory: code/middleware
       env:
-        # IMAGE_NAME: ${{secrets.region}}-docker.pkg.dev/${{ secrets.project_id }}/${{ secrets.basename}}-app/fe
         IMAGE_NAME: us-central1-docker.pkg.dev/axiomatic-spark-375511/seventh-app/api
       steps:
         - name: Checkout repository
@@ -34,3 +43,4 @@
 
         - name: Push Docker image
           run: docker push $IMAGE_NAME
+
