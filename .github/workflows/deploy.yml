@@ -8,9 +8,9 @@ on:
 
 jobs:
   terraform:
-    permissions:
-      pull-requests: write
-      deployments: write
+    # permissions:
+    #   pull-requests: write
+    #   deployments: write
     name: "Terraform"
     runs-on: ubuntu-latest
     defaults:
