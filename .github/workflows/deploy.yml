@@ -57,6 +57,6 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run:  terraform apply -auto-approve -lock=false"
+        run:  terraform apply -auto-approve -lock=false
         env:
           GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS}}
