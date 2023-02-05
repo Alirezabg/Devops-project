@@ -12,7 +12,7 @@ jobs:
         name: Setup Gcloud Account
         runs-on: ubuntu-latest
         env:
-          IMAGE_NAME: gcr.io/${{ secrets.project_id }}/forth-app
+          IMAGE_NAME: gcr.io/${{ secrets.GOOGLE_CREDENTIALS .project_id }}/forth-app
         steps:
 
         - name: Login
