@@ -15,7 +15,7 @@ jobs:
         run:
           working-directory: code/frontend
       env:
-        IMAGE_NAME: ${{secrets.region}}-docker.pkg.dev/${{ secrets.project_id }}/${{ secrets.basename}}/fe
+        IMAGE_NAME: ${{secrets.region}}-docker.pkg.dev/${{ secrets.project_id }}/${{ secrets.basename}}-app/fe
       steps:
         - name: Checkout repository
           uses: actions/checkout@v2
