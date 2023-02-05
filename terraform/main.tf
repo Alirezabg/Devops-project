@@ -17,7 +17,7 @@ provider "google" {
   project     = var.project_id
   region      = "us-central1"
   zone        = "us-central1-c"
-  credentials = file("terra.json")
+  # credentials = file("terra.json")
 }
 #Use this data source to get project details.
 output "project_number" {
