@@ -32,6 +32,9 @@ jobs:
 
         - name: 'Use gcloud CLI'
           run: 'gcloud info'
+        
+        - name: 'artifact registery'
+          run : gcloud auth configure-docker us-central1-docker.pkg.dev
 
         - name: Configure Docker
           run: gcloud auth configure-docker --quiet
