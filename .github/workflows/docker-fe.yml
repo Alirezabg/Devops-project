@@ -8,8 +8,8 @@ on:
 
 jobs:
 
-  fe-deploy:
-    needs: 'api-deploy'
+  fedeploy:
+    needs: 'deploy'
       name: Setup Gcloud Account
       runs-on: ubuntu-latest
       defaults:
@@ -17,7 +17,7 @@ jobs:
           working-directory: code/frontend
       env:
         # IMAGE_NAME: ${{secrets.region}}-docker.pkg.dev/${{ secrets.project_id }}/${{ secrets.basename}}-app/fe
-        IMAGE_NAME: us-central1-docker.pkg.dev/axiomatic-spark-375511/seventh-app/fe
+        IMAGE_NAME: us-central1-docker.pkg.dev/axiomatic-spark-375511/devops-app/fe
       steps:
         - name: Checkout repository
           uses: actions/checkout@v2
@@ -47,5 +47,5 @@ jobs:
           run: docker push $IMAGE_NAME
 
         - name: Deploying to Cloud Run
-          run: gcloud run deploy seventh-fe --image $IMAGE_NAME --region us-central1 --platform managed
+          run: gcloud run deploy devops-fe --image $IMAGE_NAME --region us-central1 --platform managed
 
