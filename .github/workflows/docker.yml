@@ -8,11 +8,14 @@ on:
 
 jobs:
 
-    deploy:
+    deploy_frontend:
         name: Setup Gcloud Account
         runs-on: ubuntu-latest
+        defaults:
+          run:
+           working-directory: code/frontend
         env:
-          IMAGE_NAME: gcr.io/${{ secrets.project_id }}/${{ secrets.basename}}
+          IMAGE_NAME: ${{secrets.region}}-docker.pkg.dev/${{ secrets.project_id }}/${{ secrets.basename}}/fe
         steps:
 
         - name: Login
