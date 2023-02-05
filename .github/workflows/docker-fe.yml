@@ -1,0 +1,47 @@
+name: Docker
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  deploy:
+      name: Setup Gcloud Account
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: code/frontend
+      env:
+        # IMAGE_NAME: ${{secrets.region}}-docker.pkg.dev/${{ secrets.project_id }}/${{ secrets.basename}}-app/fe
+        IMAGE_NAME: us-central1-docker.pkg.dev/axiomatic-spark-375511/seventh-app/fe
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - id: 'auth'
+          uses: 'google-github-actions/auth@v1'
+          with:
+            credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+        - name: 'Set up Cloud SDK'
+          uses: 'google-github-actions/setup-gcloud@v1'
+          with:
+            version: '>= 363.0.0'
+
+        - name: 'Use gcloud CLI'
+          run: 'gcloud info'
+        
+        - name: 'artifact registery'
+          run : gcloud auth configure-docker us-central1-docker.pkg.dev
+
+        - name: Configure Docker
+          run: gcloud auth configure-docker --quiet
+
+        - name: Build Docker image
+          run: docker build --tag $IMAGE_NAME .
+
+        - name: Push Docker image
+          run: docker push $IMAGE_NAME
+
