@@ -8,31 +8,31 @@ on:
 
 jobs:
 
-    deploy_frontend:
+    deploy:
         name: Setup Gcloud Account
         runs-on: ubuntu-latest
         defaults:
           run:
-           working-directory: code/frontend
+            working-directory: code/frontend
         env:
           IMAGE_NAME: ${{secrets.region}}-docker.pkg.dev/${{ secrets.project_id }}/${{ secrets.basename}}/fe
         steps:
-         - name: Checkout repository
-           uses: actions/checkout@v2
+          - name: Checkout repository
+            uses: actions/checkout@v2
 
-         - id: 'auth'
-           uses: 'google-github-actions/auth@v1'
-           with:
-           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
-         - name: 'Set up Cloud SDK'
-           uses: 'google-github-actions/setup-gcloud@v1'
-           with:
-           version: '>= 363.0.0'
+          - id: 'auth'
+            uses: 'google-github-actions/auth@v1'
+            with:
+              credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+          - name: 'Set up Cloud SDK'
+            uses: 'google-github-actions/setup-gcloud@v1'
+            with:
+              version: '>= 363.0.0'
 
-         - name: 'Use gcloud CLI'
-           run: 'gcloud info'
-         - name: Configure Docker
-           run: gcloud auth configure-docker --quiet
+          - name: 'Use gcloud CLI'
+            run: 'gcloud info'
+          - name: Configure Docker
+            run: gcloud auth configure-docker --quiet
 
 
 
