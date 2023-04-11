@@ -2,7 +2,7 @@ name: "Terraform CI Deployment"
 on:
   push:
     branches:
-      - main
+      - terraform
   pull_request:
   workflow_dispatch:
 
