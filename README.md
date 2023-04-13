@@ -26,4 +26,7 @@ storage.objects.delete
 storage.objects.update
 
 
+# API should be enabled
+Artifact Registry API 
+Cloud Resource Manager API
 #
