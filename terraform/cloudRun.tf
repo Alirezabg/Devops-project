@@ -92,15 +92,7 @@ resource "google_cloud_run_service" "api" {
 }
 
 resource "null_resource" "cloudbuild_fe" {
-    limits = {
-    # CPU usage limit
-    # https://cloud.google.com/run/docs/configuring/cpu
-    cpu = "1000m" # 1 vCPU
 
-    # Memory usage limit (per container)
-    # https://cloud.google.com/run/docs/configuring/memory-limits
-    memory = "256Mi"
-  }
   provisioner "local-exec" {
     working_dir = "${path.module}/../code/frontend"
     command     = "gcloud builds submit . --substitutions=_REGION=${var.region},_BASENAME=${var.basename} --project=${var.project_id}"
@@ -116,7 +108,15 @@ resource "google_cloud_run_service" "fe" {
   name     = "${var.basename}-fe"
   location = var.region
   project  = var.project_id
+    limits = {
+    # CPU usage limit
+    # https://cloud.google.com/run/docs/configuring/cpu
+    cpu = "1000m" # 1 vCPU
 
+    # Memory usage limit (per container)
+    # https://cloud.google.com/run/docs/configuring/memory-limits
+    memory = "256Mi"
+  }
   template {
     spec {
       service_account_name = google_service_account.runsa.email
