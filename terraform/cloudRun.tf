@@ -22,7 +22,11 @@ resource "google_cloud_run_service" "api" {
   name     = "${var.basename}-api"
   location = var.region
   project  = var.project_id
-
+  metadata {
+    annotations =  {
+        "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
+    }
+  }
   template {
     spec {
       service_account_name = google_service_account.runsa.email
