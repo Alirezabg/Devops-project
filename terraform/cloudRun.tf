@@ -27,7 +27,7 @@ resource "google_cloud_run_service" "api" {
     spec {
       service_account_name = google_service_account.runsa.email
       containers {
-        resource {
+        resources {
           limits = {
             # CPU usage limit
             # https://cloud.google.com/run/docs/configuring/cpu
@@ -116,7 +116,7 @@ resource "google_cloud_run_service" "fe" {
       service_account_name = google_service_account.runsa.email
       containers {
 
-        resource {
+        resources {
           limits = {
             # CPU usage limit
             # https://cloud.google.com/run/docs/configuring/cpu
