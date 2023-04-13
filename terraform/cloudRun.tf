@@ -7,7 +7,7 @@ resource "null_resource" "cloudbuild_api" {
     #gcloud builds - create and manage builds for Google Cloud Build
     #Build, test, and deploy on our serverless CI/CD platform.
     #gcloud builds submit - submit a build using Google Cloud Build
-    command     = "gcloud builds submit . --substitutions=_REGION=${var.region},_BASENAME=${var.basename} --project=${var.project_id}"
+    command = "gcloud builds submit . --substitutions=_REGION=${var.region},_BASENAME=${var.basename} --project=${var.project_id}"
   }
 
   depends_on = [
@@ -27,6 +27,17 @@ resource "google_cloud_run_service" "api" {
     spec {
       service_account_name = google_service_account.runsa.email
       containers {
+        resources {
+          limits = {
+            # CPU usage limit
+            # https://cloud.google.com/run/docs/configuring/cpu
+            cpu = "1000m" # 1 vCPU
+
+            # Memory usage limit (per container)
+            # https://cloud.google.com/run/docs/configuring/memory-limits
+            memory = "256Mi"
+          }
+        }
         image = "${var.region}-docker.pkg.dev/${var.project_id}/${var.basename}-app/api"
         env {
           name = "REDISHOST"
@@ -77,6 +88,22 @@ resource "google_cloud_run_service" "api" {
       }
     }
   }
+  metadata {
+  annotations = {
+
+    # Max instances
+    # https://cloud.google.com/run/docs/configuring/max-instances
+    "autoscaling.knative.dev/maxScale" = "5"
+
+    # Min instances
+    # https://cloud.google.com/run/docs/configuring/min-instances
+    "autoscaling.knative.dev/minScale" = "0"
+
+    # If true, garbage-collect CPU when once a request finishes
+    # https://cloud.google.com/run/docs/configuring/cpu-allocation
+    "run.googleapis.com/cpu-throttling" = false
+  }
+}
   autogenerate_revision_name = true
   depends_on = [
     null_resource.cloudbuild_api,
@@ -84,6 +111,7 @@ resource "google_cloud_run_service" "api" {
 }
 
 resource "null_resource" "cloudbuild_fe" {
+
   provisioner "local-exec" {
     working_dir = "${path.module}/../code/frontend"
     command     = "gcloud builds submit . --substitutions=_REGION=${var.region},_BASENAME=${var.basename} --project=${var.project_id}"
@@ -99,11 +127,22 @@ resource "google_cloud_run_service" "fe" {
   name     = "${var.basename}-fe"
   location = var.region
   project  = var.project_id
-
   template {
     spec {
       service_account_name = google_service_account.runsa.email
       containers {
+
+        resources {
+          limits = {
+            # CPU usage limit
+            # https://cloud.google.com/run/docs/configuring/cpu
+            cpu = "1000m" # 1 vCPU
+
+            # Memory usage limit (per container)
+            # https://cloud.google.com/run/docs/configuring/memory-limits
+            memory = "256Mi"
+          }
+        }
         image = "${var.region}-docker.pkg.dev/${var.project_id}/${var.basename}-app/fe"
         ports {
           container_port = 80
