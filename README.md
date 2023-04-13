@@ -6,7 +6,14 @@
 follow this link to install Google cloud CLI
 https://cloud.google.com/sdk/docs/install
 
+# Create Service Account fot Terraform
+gcloud iam service-accounts create NAME [--description=DESCRIPTION] [--display-name=DISPLAY_NAME] [GCLOUD_WIDE_FLAG …]
 
+gcloud iam service-accounts keys create key.json --iam-account=my-iam-account@my-project.iam.gserviceaccount.com
+
+store credential in github secrets as GOOGLE_CREDENTIALS
+also define BASENAME and REGION
+change the PROJECT_ID and number in variable.tf
 # Create a bucket to store Terraform state
 gcloud storage buckets create gs://BUCKET_NAME
 # Use github secret to manage Google Credential
