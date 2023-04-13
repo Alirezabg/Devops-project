@@ -7,7 +7,7 @@ resource "null_resource" "cloudbuild_api" {
     #gcloud builds - create and manage builds for Google Cloud Build
     #Build, test, and deploy on our serverless CI/CD platform.
     #gcloud builds submit - submit a build using Google Cloud Build
-    command     = "gcloud builds submit . --substitutions=_REGION=${var.region},_BASENAME=${var.basename} --project=${var.project_id}"
+    command = "gcloud builds submit . --substitutions=_REGION=${var.region},_BASENAME=${var.basename} --project=${var.project_id}"
   }
 
   depends_on = [
@@ -22,14 +22,16 @@ resource "google_cloud_run_service" "api" {
   name     = "${var.basename}-api"
   location = var.region
   project  = var.project_id
-  limits = {
-    # CPU usage limit
-    # https://cloud.google.com/run/docs/configuring/cpu
-    cpu = "1000m" # 1 vCPU
+  resource {
+    limits = {
+      # CPU usage limit
+      # https://cloud.google.com/run/docs/configuring/cpu
+      cpu = "1000m" # 1 vCPU
 
-    # Memory usage limit (per container)
-    # https://cloud.google.com/run/docs/configuring/memory-limits
-    memory = "256Mi"
+      # Memory usage limit (per container)
+      # https://cloud.google.com/run/docs/configuring/memory-limits
+      memory = "256Mi"
+    }
   }
   template {
     spec {
@@ -108,14 +110,16 @@ resource "google_cloud_run_service" "fe" {
   name     = "${var.basename}-fe"
   location = var.region
   project  = var.project_id
+  resource {
     limits = {
-    # CPU usage limit
-    # https://cloud.google.com/run/docs/configuring/cpu
-    cpu = "1000m" # 1 vCPU
+      # CPU usage limit
+      # https://cloud.google.com/run/docs/configuring/cpu
+      cpu = "1000m" # 1 vCPU
 
-    # Memory usage limit (per container)
-    # https://cloud.google.com/run/docs/configuring/memory-limits
-    memory = "256Mi"
+      # Memory usage limit (per container)
+      # https://cloud.google.com/run/docs/configuring/memory-limits
+      memory = "256Mi"
+    }
   }
   template {
     spec {
