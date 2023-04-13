@@ -13,7 +13,7 @@ gcloud iam service-accounts keys create key.json --iam-account=my-iam-account@my
 
 store credential in github secrets as GOOGLE_CREDENTIALS
 also define BASENAME and REGION
-change the PROJECT_ID and number in variable.tf
+change the PROJECT_ID and number in variable.tf or in GOOGLE_CREDENTIALS
 # Create a bucket to store Terraform state
 gcloud storage buckets create gs://BUCKET_NAME
 # Use github secret to manage Google Credential
