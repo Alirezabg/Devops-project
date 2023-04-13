@@ -16,12 +16,12 @@
 
 variable "project_id" {
   type    = string
-  default = "axiomatic-spark-375511"
+  default = "oceanic-abacus-382410"
 }
 
 variable "project_number" {
   type    = string
-  default = "126760424798"
+  default = "134802653344"
 }
 
 variable "region" {
