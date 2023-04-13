@@ -16,7 +16,7 @@ jobs:
           working-directory: code/frontend
       env:
         # IMAGE_NAME: ${{secrets.region}}-docker.pkg.dev/${{ secrets.project_id }}/${{ secrets.basename}}-app/fe
-        IMAGE_NAME: us-central1-docker.pkg.dev/axiomatic-spark-375511/devops-app/fe
+        IMAGE_NAME: us-central1-docker.pkg.dev/${{ secrets.project_id }}/devops-app/fe
       steps:
         - name: Checkout repository
           uses: actions/checkout@v2
