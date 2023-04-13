@@ -93,11 +93,11 @@ resource "google_cloud_run_service" "api" {
 
     # Max instances
     # https://cloud.google.com/run/docs/configuring/max-instances
-    "autoscaling.knative.dev/maxScale" = 10
+    "autoscaling.knative.dev/maxScale" = "5"
 
     # Min instances
     # https://cloud.google.com/run/docs/configuring/min-instances
-    "autoscaling.knative.dev/minScale" = 1
+    "autoscaling.knative.dev/minScale" = "0"
 
     # If true, garbage-collect CPU when once a request finishes
     # https://cloud.google.com/run/docs/configuring/cpu-allocation
