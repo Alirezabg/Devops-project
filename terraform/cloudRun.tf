@@ -88,6 +88,22 @@ resource "google_cloud_run_service" "api" {
       }
     }
   }
+  metadata {
+  annotations = {
+
+    # Max instances
+    # https://cloud.google.com/run/docs/configuring/max-instances
+    "autoscaling.knative.dev/maxScale" = 10
+
+    # Min instances
+    # https://cloud.google.com/run/docs/configuring/min-instances
+    "autoscaling.knative.dev/minScale" = 1
+
+    # If true, garbage-collect CPU when once a request finishes
+    # https://cloud.google.com/run/docs/configuring/cpu-allocation
+    "run.googleapis.com/cpu-throttling" = false
+  }
+}
   autogenerate_revision_name = true
   depends_on = [
     null_resource.cloudbuild_api,
