@@ -22,21 +22,22 @@ resource "google_cloud_run_service" "api" {
   name     = "${var.basename}-api"
   location = var.region
   project  = var.project_id
-  resource {
-    limits = {
-      # CPU usage limit
-      # https://cloud.google.com/run/docs/configuring/cpu
-      cpu = "1000m" # 1 vCPU
 
-      # Memory usage limit (per container)
-      # https://cloud.google.com/run/docs/configuring/memory-limits
-      memory = "256Mi"
-    }
-  }
   template {
     spec {
       service_account_name = google_service_account.runsa.email
       containers {
+        resource {
+          limits = {
+            # CPU usage limit
+            # https://cloud.google.com/run/docs/configuring/cpu
+            cpu = "1000m" # 1 vCPU
+
+            # Memory usage limit (per container)
+            # https://cloud.google.com/run/docs/configuring/memory-limits
+            memory = "256Mi"
+          }
+        }
         image = "${var.region}-docker.pkg.dev/${var.project_id}/${var.basename}-app/api"
         env {
           name = "REDISHOST"
@@ -110,21 +111,22 @@ resource "google_cloud_run_service" "fe" {
   name     = "${var.basename}-fe"
   location = var.region
   project  = var.project_id
-  resource {
-    limits = {
-      # CPU usage limit
-      # https://cloud.google.com/run/docs/configuring/cpu
-      cpu = "1000m" # 1 vCPU
-
-      # Memory usage limit (per container)
-      # https://cloud.google.com/run/docs/configuring/memory-limits
-      memory = "256Mi"
-    }
-  }
   template {
     spec {
       service_account_name = google_service_account.runsa.email
       containers {
+
+        resource {
+          limits = {
+            # CPU usage limit
+            # https://cloud.google.com/run/docs/configuring/cpu
+            cpu = "1000m" # 1 vCPU
+
+            # Memory usage limit (per container)
+            # https://cloud.google.com/run/docs/configuring/memory-limits
+            memory = "256Mi"
+          }
+        }
         image = "${var.region}-docker.pkg.dev/${var.project_id}/${var.basename}-app/fe"
         ports {
           container_port = 80
