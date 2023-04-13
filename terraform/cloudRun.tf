@@ -22,11 +22,7 @@ resource "google_cloud_run_service" "api" {
   name     = "${var.basename}-api"
   location = var.region
   project  = var.project_id
-  metadata {
-    annotations =  {
-        "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
-    }
-  }
+
   template {
     spec {
       service_account_name = google_service_account.runsa.email
@@ -84,11 +80,12 @@ resource "google_cloud_run_service" "api" {
 
     metadata {
       annotations = {
-        "autoscaling.knative.dev/maxScale"        = "1000"
+        "autoscaling.knative.dev/maxScale"        = "10"
         "run.googleapis.com/cloudsql-instances"   = google_sql_database_instance.main.connection_name
         "run.googleapis.com/client-name"          = "terraform"
         "run.googleapis.com/vpc-access-egress"    = "all"
         "run.googleapis.com/vpc-access-connector" = google_vpc_access_connector.main.id
+        "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
       }
     }
   }
